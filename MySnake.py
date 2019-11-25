@@ -143,15 +143,19 @@ class Snake:
 
 
 def main():
+    #use pygame to use the game
     pygame.init()
     pygame.mixer.init()
     snake = Snake()
+    #generate game screen
     screen = pygame.display.set_mode((window_width, window_height), 0, 32)
     pygame.display.set_caption('Snake')
     new_direction = snake.current_direction
+    #generate start world and background
     snake.words_setting(pygame)
     background_image = pygame.image.load("Background.jpg")
 
+    #control the snake
     while 1:
         for event in pygame.event.get():
             if event.type == pygame.K_ESCAPE:
