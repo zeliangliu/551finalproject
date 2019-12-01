@@ -1,24 +1,25 @@
 import pygame
 import time
 import random as rd
-import tkinter as tk
-from tkinter import messagebox
+
+from os import path
 
 # set the window size
 window_width = 640
 window_height = 480
-
 
 class Snake:
 
     # define the four snake's moving direction
     direction_horizontal = ['left', 'right']
     direction_vertical = ['up', 'down']
+
+    #define snake's width and food width
     width = 20
 
     def __init__(self):
         # one step moving length
-        self.move_distance = 10
+        self.move_distance = 20
         # food color: yellow
         self.food_color = (255, 255, 0)
         self.reset()
@@ -106,12 +107,15 @@ class Snake:
             self.map[(x // self.width, y // self.width)] = 1
 
     #run mysnake
-    def run(self, pygame, screen):
+    def run(self, pygame, screen,sound):
         if self.game_status == "run":
             self.move()
             self.body.append(self.head[:])
             # check if the snake eat the food
             if self.head == self.generated_food:
+                if sound:
+                    sound_wav = pygame.mixer.Sound("eat.wav")
+                    sound_wav.play()
                 self.generate_food()
             else:
                 self.body.pop(0)
@@ -154,7 +158,10 @@ def main():
     #generate start world and background
     snake.words_setting(pygame)
     background_image = pygame.image.load("Background.jpg")
-
+    sound = False
+    if path.exists("eat.wav"):
+        # sound_wav = pygame.mixer.Sound("eat.wav")
+        sound = True
     #control the snake
     while 1:
         for event in pygame.event.get():
@@ -189,7 +196,7 @@ def main():
                         snake.game_status = "run"
 
         screen.blit(background_image, [0, 0])
-        snake.run(pygame, screen)
+        snake.run(pygame, screen, sound)
 
 
 if __name__ == '__main__':
