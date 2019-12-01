@@ -36,7 +36,7 @@ class Snake:
         # the first moving direction is right
         self.current_direction = 'right'
         # moving speed is 10
-        self.speed = 10
+        self.speed = 5
         # generate the screen into a map
         self.map = {}
         for x in range(32):
@@ -80,8 +80,8 @@ class Snake:
 
     # when the snake head hit the food then generate a new food
     def generate_food(self):
-        if len(self.body) // 16 > 4:
-            self.speed = len(self.body) // 16
+        if len(self.body) // 4 > 5:
+            self.speed = len(self.body) // 4
         self.calculate_taken_position()
         # find the empty position to generate new food (at random)
         empty_position = []
